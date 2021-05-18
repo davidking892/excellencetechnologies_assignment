@@ -1,1 +1,80 @@
 
+
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:todo_app/fetchData.dart';
+import 'package:http/http.dart' as http;
+
+void main() => {
+  runApp(MyApp())
+};
+
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+
+}
+
+Future<FetchData> fetchDataService() async{
+  final response=await http.get("www.example.com/api/get/1");
+
+    if (response.statusCode == 200) {
+       return FetchData.fromJson(json.decode(response.body));
+    }else{
+      throw Exception('Server Error');
+    }
+
+  }
+
+class _MyAppState extends State<MyApp> {
+  Future<FetchData> fetchData;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData=fetchDataService();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+     return MaterialApp(
+       title:'Api Fetch',
+       home: Scaffold(
+          appBar: AppBar(
+            title: Text('Api Request')
+          ),
+         body:Expanded(
+            child: FutureBuilder<FetchData>(
+              future: fetchData,
+                builder: (context, val) {
+                  if(val.hasData){
+                    return Text(val.data.message);
+                  }
+                  return CircularProgressIndicator();
+                }
+         ),
+         ),
+       )
+     );
+  }
+
+}
+
+
+
+
+class FetchData {
+  final String message;
+  final int id;
+
+  FetchData({this.message, this.id});
+
+  factory FetchData.fromJson(Map<String, dynamic> json) {
+    return FetchData(
+      message: json['message'],
+      id: json['id'],
+    );
+  }
+}
