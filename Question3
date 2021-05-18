@@ -1,0 +1,12 @@
+function searchForDuplicateEntry (sorted_array) {
+  let results = [];
+  for (let i = 0; i < sorted_array.length - 1; i++) {
+    if (sorted_array[i + 1] == sorted_array[i]) {
+      results.push(sorted_array[i]);
+    }
+  }
+  return results;
+}
+
+let sortedArray = [0,1,2,3,4,5,6,7,7,8,9,10...................];
+console.log(`duplicates entry in ${sortedArray} are ${searchForDuplicateEntry(sortedArray)}`);
