@@ -1,0 +1,7 @@
+
+void main() {
+  List random_no = [5, 22, 3,10, 4, 1, 16, 7, 8, 2, 10];
+  for (int no in random_no) {
+    if (no % 2 == 0) print(no);
+  }
+}
