@@ -1,0 +1,31 @@
+
+void main() {
+  int number=00110001001110;
+  maxNumberOfConsecutiveOne(number.toString());
+}
+
+ void maxNumberOfConsecutiveOne(String value) {
+   int maxNumberCount = 0;
+   int currentMax = 0;
+  if ( value.isEmpty || !value.contains("1")) {
+    return 0;
+  }else{
+    for (int i = 0; i < value.length; i++) {
+      if (value[i] == "1") {
+        currentMax++;
+      } else if(currentMax != 0) {
+          if (maxNumberCount < currentMax) {
+            maxNumberCount = currentMax;
+          }
+          currentMax = 0;
+      }
+    }
+  }
+
+  if (maxNumberCount < currentMax) {
+    maxNumberCount = currentMax;
+  }
+
+  print("Max num of consecutive 1's is in "+value+" is "+maxNumberCount.toString());
+
+}
